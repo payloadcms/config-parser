@@ -11,14 +11,7 @@ export const esbuildParser = async (entry: string, target: 'admin' | 'server') =
     bundle: true,
     platform: target === 'server' ? 'node' : undefined,
     target: ['node16.20'],
-    // packages: 'external',
-    external: [
-      // '@swc/wasm',
-      // '@swc/core',
-      // 'uglify-js',
-      // 'pnpapi',
-      'payload'
-    ],
+    packages: 'external',
     outfile: `./.payload/${target}.config.js`,
     plugins: [
       plugins[target],
