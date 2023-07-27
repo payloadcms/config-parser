@@ -6,7 +6,7 @@ The server-only config should maintain only config properties that are relevant 
 
 The admin-only config should remove any server-side code such as access control, hooks, endpoints, and similar.
 
-Once these properties are removed from their respective configs, all unused imports should also be removed.
+Once these properties are removed from their respective configs, all unused imports should also be removed, and the result should be bundled into a single file and either written to `./.payload/server.config.js` or `./.payload/admin.config.js`.
 
 ### Within this repo
 
