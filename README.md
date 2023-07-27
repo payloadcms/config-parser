@@ -16,7 +16,6 @@ We've stubbed out a `payload.config.ts` within this repo that showcases a few di
 - Collection in a separate file
 - Function that returns a collection
 - Plugin that injects a Global collection from a separate file
-- Function that returns a collection
 
 ### Purpose
 
