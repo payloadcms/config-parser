@@ -8,6 +8,16 @@ The admin-only config should remove any server-side code such as access control,
 
 Once these properties are removed from their respective configs, all unused imports should also be removed.
 
+### Within this repo
+
+We've stubbed out a `payload.config.ts` within this repo that showcases a few different structures that we will need to recurse through, in order to remove irrelevant config properties from their respective config targets.
+
+- Collections written directly into `payload.config.ts`
+- Collection in a separate file
+- Function that returns a collection
+- Plugin that injects a Global collection from a separate file
+- Function that returns a collection
+
 ### Purpose
 
 1. Right now, Payload requires you to use Webpack "aliases" to eliminate server-side code from appearing in your admin bundle, but if we can create an admin-specific version of the config, that requirement would become unnecessary.
