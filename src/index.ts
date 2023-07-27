@@ -20,7 +20,7 @@ const start = async () => {
     }
 
     case 'esbuild': {
-      await esbuildParser(configPath)
+      await esbuildParser(configPath, 'server')
     }
   }
 
