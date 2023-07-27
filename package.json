@@ -8,13 +8,18 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
+    "@payloadcms/plugin-stripe": "^0.0.13",
+    "@swc/core": "^1.3.71",
+    "esbuild": "^0.18.17",
     "get-tsconfig": "^4.6.2",
     "payload": "^1.11.7",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   },
   "scripts": {
-    "start": "ts-node src",
+    "parse:ts": "ts-node src/index.ts ts",
+    "parse:swc": "ts-node src/index.ts swc",
+    "parse:esbuild": "ts-node src/index.ts esbuild",
     "generate:types": "cross-env PAYLOAD_CONFIG_PATH=payload.config.ts payload generate:types"
   },
   "devDependencies": {

@@ -1,9 +1,9 @@
 import * as ts from "typescript";
 
-export const parser = async (path: string, compilerOptions: ts.CompilerOptions): Promise<void> => {
-  let program = ts.createProgram([path], compilerOptions);
+export const typescriptParser = async (entry: string, compilerOptions: ts.CompilerOptions): Promise<void> => {
+  let program = ts.createProgram([entry], compilerOptions);
 
-  const sourceFile = program.getSourceFile(path);
+  const sourceFile = program.getSourceFile(entry);
   const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed });
 
   // Loop through the root AST nodes of the file

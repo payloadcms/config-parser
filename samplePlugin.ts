@@ -1,4 +1,4 @@
-import { Plugin } from "payload/config";
+import type { Plugin } from "payload/config";
 import { PluginGlobal } from "./Global";
 
 export const samplePlugin: Plugin = (config) => ({

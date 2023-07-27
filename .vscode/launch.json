@@ -5,8 +5,14 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "command": "yarn start",
-      "name": "Debug Payload Config Parser",
+      "command": "yarn parse:swc",
+      "name": "Payload Config Parser - SWC",
+      "request": "launch",
+      "type": "node-terminal",
+    },
+    {
+      "command": "yarn parse:ts",
+      "name": "Payload Config Parser - TS",
       "request": "launch",
       "type": "node-terminal",
     },
