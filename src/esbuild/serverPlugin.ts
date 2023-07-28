@@ -1,19 +1,55 @@
-export const serverPlugin = {
+import * as esbuild from 'esbuild'
+import { getTsconfig as getTSconfig } from 'get-tsconfig'
+import * as ts from 'typescript'
+import util from 'util'
+
+export const serverPlugin: esbuild.Plugin = {
   name: 'payload-server',
   setup(build) {
-    // Intercept import paths called "env" so esbuild doesn't attempt
-    // to map them to a file system location. Tag them with the "env-ns"
-    // namespace to reserve them for this plugin.
-    build.onResolve({ filter: /^env$/ }, args => ({
-      path: args.path,
-      namespace: 'env-ns',
-    }))
+    build.onLoad({ filter: /payload.config.ts$/ }, (args) => {
+      const program = ts.createProgram(
+        [args.path],
+        getTSconfig().config.compilerOptions as unknown as ts.CompilerOptions,
+      )
+      const payloadConfig = program.getSourceFile(args.path)
+      const checker = program.getTypeChecker() // Removing this line causes an esbuild error?
 
-    // Load paths tagged with the "env-ns" namespace and behave as if
-    // they point to a JSON file containing the environment variables.
-    build.onLoad({ filter: /.*/, namespace: 'env-ns' }, () => ({
-      contents: JSON.stringify(process.env),
-      loader: 'json',
-    }))
+      ts.forEachChild(payloadConfig, (node) => {
+        if (ts.isExportAssignment(node)) {
+          // TODO: Use ts.visitNode in order to actually modify the AST?
+          ts.forEachChild(node, visitNode)
+        }
+      })
+
+      // TODO: Use printer to print new AST/source to file afte properly modifying it.
+
+      // const printer = ts.createPrinter({ newLine: ts.NewLineKind.LineFeed })
+      // const result = printer.printFile(payloadConfig)
+      // Writing original source for now
+      return {
+        contents: payloadConfig.text,
+        loader: 'ts',
+      }
+    })
   },
+}
+
+function visitNode(node: ts.Node) {
+  // Properties are identifiers
+  if (ts.isIdentifier(node)) {
+    const propName = node.getText()
+    switch (propName) {
+      case 'hooks':
+        console.log(`Visiting config prop: ${propName}`)
+        break
+      default:
+        break
+    }
+  }
+
+  ts.forEachChild(node, visitNode)
+}
+
+function debug(obj: any) {
+  console.log(util.inspect(obj, false, null, true /* enable colors */))
 }

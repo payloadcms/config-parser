@@ -2,7 +2,7 @@ import * as esbuild from 'esbuild'
 import { serverPlugin } from './serverPlugin'
 
 const plugins = {
-  server: serverPlugin
+  server: serverPlugin,
 }
 
 export const esbuildParser = async (entry: string, target: 'admin' | 'server') => {
@@ -13,9 +13,7 @@ export const esbuildParser = async (entry: string, target: 'admin' | 'server') =
     target: ['node16.20'],
     packages: 'external',
     outfile: `./.payload/${target}.config.js`,
-    plugins: [
-      plugins[target],
-    ]
+    plugins: [plugins[target]],
   }
 
   await esbuild.build(options)

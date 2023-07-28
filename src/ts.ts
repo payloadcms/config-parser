@@ -8,6 +8,7 @@ export const typescriptParser = async (entry: string, compilerOptions: ts.Compil
 
   // Loop through the root AST nodes of the file
   ts.forEachChild(sourceFile, node => {
+    console.log({ node })
     // DO stuff
     // this function should be recursive and call itself for each required file
     // somehow adding the required file back upward into the main nodes
