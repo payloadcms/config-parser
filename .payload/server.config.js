@@ -32,100 +32,10 @@ __export(payload_config_exports, {
   default: () => payload_config_default
 });
 module.exports = __toCommonJS(payload_config_exports);
-var import_config = require("payload/config");
-
-// Posts.ts
-var Posts = {
-  slug: "posts",
-  hooks: {
-    afterRead: [
-      () => {
-        console.log("post being read");
-      }
-    ]
-  },
-  fields: [
-    {
-      name: "title",
-      type: "text"
-    }
-  ]
+var import_crypto = __toESM(require("crypto"));
+var payload_config_default = {
+  test: 123,
+  crypto: import_crypto.default
+  // payload,
+  // buildConfig,
 };
-
-// Global.ts
-var import_fs = __toESM(require("fs"));
-var PluginGlobal = {
-  slug: "plugin-global",
-  hooks: {
-    afterRead: [
-      () => {
-        console.log("plugin global read");
-        console.log(import_fs.default);
-      }
-    ]
-  },
-  fields: [
-    {
-      name: "title",
-      type: "text"
-    }
-  ]
-};
-
-// samplePlugin.ts
-var samplePlugin = (config) => ({
-  ...config,
-  globals: [
-    PluginGlobal
-  ]
-});
-
-// getMediaCollection.ts
-var getMediaCollection = (slug) => {
-  return {
-    slug,
-    upload: true,
-    fields: [
-      {
-        name: "alt",
-        type: "text"
-      }
-    ]
-  };
-};
-
-// payload.config.ts
-var import_plugin_stripe = __toESM(require("@payloadcms/plugin-stripe"));
-var payload_config_default = (0, import_config.buildConfig)({
-  collections: [
-    getMediaCollection("media"),
-    {
-      slug: "pages",
-      access: {
-        read: () => true
-      },
-      hooks: {
-        afterRead: [
-          () => {
-            console.log("read");
-          }
-        ]
-      },
-      fields: [
-        {
-          name: "title",
-          type: "text"
-        }
-      ]
-    },
-    Posts
-  ],
-  plugins: [
-    samplePlugin,
-    (0, import_plugin_stripe.default)({
-      stripeSecretKey: "",
-      isTestKey: Boolean(process.env.PAYLOAD_PUBLIC_STRIPE_IS_TEST_KEY),
-      stripeWebhooksEndpointSecret: ""
-    })
-  ]
-});

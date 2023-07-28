@@ -3,14 +3,19 @@ import { getTsconfig as getTSconfig } from 'get-tsconfig'
 import * as ts from 'typescript'
 import util from 'util'
 
+const tsConfig = getTSconfig()
+
 export const serverPlugin: esbuild.Plugin = {
   name: 'payload-server',
   setup(build) {
-    build.onLoad({ filter: /payload.config.ts$/ }, (args) => {
+    build.onLoad({ filter: /\.(t|j)sx?$/ }, (args) => {
+      // This function should be called ONCE for every single file that gets loaded
+      // For each file, we need to traverse through and look for config modifications
       const program = ts.createProgram(
         [args.path],
-        getTSconfig().config.compilerOptions as unknown as ts.CompilerOptions,
+        tsConfig.config.compilerOptions as unknown as ts.CompilerOptions
       )
+
       const payloadConfig = program.getSourceFile(args.path)
       const checker = program.getTypeChecker() // Removing this line causes an esbuild error?
 
