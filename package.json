@@ -14,9 +14,11 @@
     "get-tsconfig": "^4.6.2",
     "payload": "^1.11.7",
     "ts-node": "^10.9.1",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitest": "^0.33.0"
   },
   "scripts": {
+    "test": "vitest",
     "parse:ts": "ts-node src/index.ts ts",
     "parse:swc": "ts-node src/index.ts swc",
     "parse:esbuild": "ts-node src/index.ts esbuild",
